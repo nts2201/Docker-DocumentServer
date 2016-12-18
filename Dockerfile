@@ -22,7 +22,6 @@ RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d && \
     service supervisor stop && \
     service nginx stop && \
     rm -rf /var/lib/apt/lists/*
-
 ADD config /app/onlyoffice/setup/config/
 ADD run-document-server.sh /app/onlyoffice/run-document-server.sh
 
@@ -40,7 +39,10 @@ RUN echo "$REPO_URL" | tee /etc/apt/sources.list.d/onlyoffice.list && \
     chmod 755 /app/onlyoffice/*.sh && \
     rm -rf /var/log/onlyoffice && \
     rm -rf /var/lib/apt/lists/*
-
+    
 VOLUME /etc/onlyoffice /var/log/onlyoffice /var/lib/onlyoffice /var/www/onlyoffice/Data
 
+RUN bash -c "source /app/onlyoffice/setup/config/build.sh;\
+    perm_change_ugid onlyoffice 1500; "
+    
 CMD bash -C '/app/onlyoffice/run-document-server.sh';'bash'
