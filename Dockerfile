@@ -42,6 +42,7 @@ RUN echo "$REPO_URL" | tee /etc/apt/sources.list.d/onlyoffice.list && \
     
 VOLUME /etc/onlyoffice /var/log/onlyoffice /var/lib/onlyoffice /var/www/onlyoffice/Data
 RUN chmod 777 /etc/onlyoffice /var/log/onlyoffice /var/lib/onlyoffice /var/www/onlyoffice/Data
+RUN chmod 777 /var/lib/onlyoffice/documentserver/{App_Data,App_Data/cache}
 RUN bash -c "source /app/onlyoffice/setup/config/build.sh;\
     perm_change_ugid onlyoffice 1500; "
     
