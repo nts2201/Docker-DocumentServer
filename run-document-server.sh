@@ -211,4 +211,17 @@ fi
 service nginx start
 
 # Regenerate the fonts list and the fonts thumbnails
-documentserver-generate-allfonts.sh ${ONLYOFFICE_DATA_CONTAINER}
+documentserver-generate-allfonts.sh ${ONLYOFFICE_DATA_CONTAINER} &
+
+function sigterm_handler() {
+  echo "SIGTERM signal received, try to gracefully shutdown all services..."
+  #stop all local services
+  service nginx stop
+  for i in ${LOCAL_SERVICES[@]}; do
+    service $i stop
+  done
+  exit 0
+}
+
+trap "sigterm_handler; exit" TERM
+while((1));do sleep 10; done;
