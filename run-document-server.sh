@@ -208,6 +208,10 @@ fi
 
 # nginx used as a proxy, and as data container status service.
 # it run in all cases.
+chmod 777 /var/lib/onlyoffice/documentserver;\
+chmod 777 /var/lib/onlyoffice/documentserver/App_Data;\
+chmod 777 /var/lib/onlyoffice/documentserver/App_Data/cache;\
+chmod 777 /var/lib/onlyoffice/documentserver/App_Data/cache/files;
 service nginx start
 
 # Regenerate the fonts list and the fonts thumbnails
